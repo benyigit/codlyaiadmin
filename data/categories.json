@@ -1,0 +1,32 @@
+[
+  {
+    "id": "coding",
+    "name": "Coding",
+    "subtitle": "Built for code & dev tasks",
+    "symbol": "terminal.fill"
+  },
+  {
+    "id": "reasoning",
+    "name": "Reasoning",
+    "subtitle": "Deeper thinking & logic",
+    "symbol": "brain.head.profile"
+  },
+  {
+    "id": "small",
+    "name": "Small Models",
+    "subtitle": "Tiny, fast, battery-friendly",
+    "symbol": "bolt.fill"
+  },
+  {
+    "id": "turkish",
+    "name": "Turkish Friendly",
+    "subtitle": "Strong Turkish language support",
+    "symbol": "character.bubble.fill"
+  },
+  {
+    "id": "offline",
+    "name": "Offline Friendly",
+    "subtitle": "Great fully offline",
+    "symbol": "wifi.slash"
+  }
+]

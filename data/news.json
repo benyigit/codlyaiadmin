@@ -1,0 +1,23 @@
+[
+  {
+    "id": "news-1",
+    "title": "On-device AI keeps getting faster",
+    "summary": "New small models rival last year's flagships while running locally.",
+    "tag": "Trends",
+    "dateLabel": "This week"
+  },
+  {
+    "id": "news-2",
+    "title": "GGUF becomes the local standard",
+    "summary": "A single portable format for quantized models across devices.",
+    "tag": "Formats",
+    "dateLabel": "Recently"
+  },
+  {
+    "id": "news-3",
+    "title": "Privacy-first AI on the rise",
+    "summary": "More people choose local models to keep data on their device.",
+    "tag": "Privacy",
+    "dateLabel": "Recently"
+  }
+]

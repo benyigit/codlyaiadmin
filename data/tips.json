@@ -1,0 +1,20 @@
+[
+  {
+    "id": "tip-1",
+    "title": "Pick the right size",
+    "body": "Smaller models (1–3B) feel instant on iPhone. Save big ones for plugged-in sessions.",
+    "symbol": "leaf.fill"
+  },
+  {
+    "id": "tip-2",
+    "title": "Quantization matters",
+    "body": "Q4 balances quality and speed. Q8 is sharper but uses more memory.",
+    "symbol": "square.stack.3d.up.fill"
+  },
+  {
+    "id": "tip-3",
+    "title": "Everything is offline",
+    "body": "Turn on Airplane Mode — your chats keep working entirely on-device.",
+    "symbol": "airplane"
+  }
+]
