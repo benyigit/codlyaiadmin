@@ -4,7 +4,6 @@ import { useState } from "react";
 import { useRouter } from "next/navigation";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
-import Image from "next/image";
 
 export default function LoginPage() {
   const [username, setUsername] = useState("");
@@ -33,66 +32,61 @@ export default function LoginPage() {
   };
 
   return (
-    <div className="flex min-h-screen items-center justify-center bg-zinc-50 font-sans">
-      <div className="w-full max-w-[360px] px-6">
-        <div className="flex flex-col items-center mb-10">
-          <div className="w-16 h-16 bg-white rounded-2xl shadow-sm border border-zinc-100 flex items-center justify-center mb-6">
-            <Image src="/logo.svg" alt="Codly Logo" width={40} height={40} className="object-contain" />
+    <div className="flex min-h-screen flex-col items-center justify-center bg-zinc-100">
+      <div className="w-full max-w-md p-8 bg-white rounded-xl shadow-lg border border-zinc-200">
+        
+        {/* Logo Section */}
+        <div className="flex flex-col items-center mb-8">
+          <div className="w-20 h-20 mb-4 bg-zinc-50 rounded-full flex items-center justify-center border border-zinc-200 shadow-sm">
+            {/* Standard img tag to fix rendering issues */}
+            <img src="/logo.svg" alt="Codly Logo" className="w-12 h-12 object-contain" />
           </div>
-          <h1 className="text-2xl font-semibold tracking-tight text-zinc-900 mb-1">Sign in to Codly</h1>
-          <p className="text-sm text-zinc-500">Welcome back! Please enter your details.</p>
+          <h1 className="text-3xl font-bold text-zinc-900 mb-2">Admin Login</h1>
+          <p className="text-zinc-500">Sign in to manage the Codly Vault.</p>
         </div>
 
-        <div className="bg-white rounded-2xl shadow-sm border border-zinc-200 p-6 sm:p-8">
-          <form onSubmit={handleLogin} className="space-y-4">
-            <div className="space-y-1.5">
-              <label htmlFor="username" className="text-sm font-medium text-zinc-700">Username</label>
-              <Input 
-                id="username" 
-                value={username} 
-                onChange={(e) => setUsername(e.target.value)} 
-                placeholder="codlyadmin" 
-                required 
-                className="h-11 rounded-xl border-zinc-200 focus-visible:ring-1 focus-visible:ring-zinc-900 focus-visible:border-zinc-900 shadow-sm bg-zinc-50"
-              />
+        {/* Form Section */}
+        <form onSubmit={handleLogin} className="space-y-6">
+          <div className="space-y-2">
+            <label htmlFor="username" className="text-sm font-bold text-zinc-700">Username</label>
+            <Input 
+              id="username" 
+              value={username} 
+              onChange={(e) => setUsername(e.target.value)} 
+              placeholder="Enter your username" 
+              required 
+              className="h-14 px-4 text-base rounded-lg border-zinc-300 focus-visible:ring-2 focus-visible:ring-blue-500 focus-visible:border-blue-500 shadow-sm"
+            />
+          </div>
+          
+          <div className="space-y-2">
+            <label htmlFor="password" className="text-sm font-bold text-zinc-700">Password</label>
+            <Input 
+              id="password" 
+              type="password" 
+              value={password} 
+              onChange={(e) => setPassword(e.target.value)} 
+              placeholder="Enter your password" 
+              required 
+              className="h-14 px-4 text-base rounded-lg border-zinc-300 focus-visible:ring-2 focus-visible:ring-blue-500 focus-visible:border-blue-500 shadow-sm"
+            />
+          </div>
+          
+          {error && (
+            <div className="p-4 bg-red-50 border border-red-200 text-red-600 rounded-lg text-sm font-semibold">
+              {error}
             </div>
-            
-            <div className="space-y-1.5">
-              <div className="flex items-center justify-between">
-                <label htmlFor="password" className="text-sm font-medium text-zinc-700">Password</label>
-              </div>
-              <Input 
-                id="password" 
-                type="password" 
-                value={password} 
-                onChange={(e) => setPassword(e.target.value)} 
-                placeholder="••••••••" 
-                required 
-                className="h-11 rounded-xl border-zinc-200 focus-visible:ring-1 focus-visible:ring-zinc-900 focus-visible:border-zinc-900 shadow-sm bg-zinc-50"
-              />
-            </div>
-            
-            {error && (
-              <div className="text-red-500 text-sm font-medium pt-1">
-                {error}
-              </div>
-            )}
-            
-            <div className="pt-2">
-              <Button 
-                className="w-full h-11 bg-zinc-900 hover:bg-zinc-800 text-white rounded-xl shadow-sm font-medium transition-colors" 
-                type="submit" 
-                disabled={loading}
-              >
-                {loading ? "Signing in..." : "Sign in"}
-              </Button>
-            </div>
-          </form>
-        </div>
+          )}
+          
+          <Button 
+            className="w-full h-14 text-base font-bold bg-blue-600 hover:bg-blue-700 active:bg-blue-800 text-white rounded-lg shadow-md transition-all mt-4" 
+            type="submit" 
+            disabled={loading}
+          >
+            {loading ? "Authenticating..." : "Login to Dashboard"}
+          </Button>
+        </form>
         
-        <p className="text-center text-zinc-400 text-xs mt-8">
-          &copy; {new Date().getFullYear()} Codly AI. All rights reserved.
-        </p>
       </div>
     </div>
   );
