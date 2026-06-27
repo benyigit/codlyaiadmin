@@ -1,0 +1,27 @@
+<svg width="512" height="512" viewBox="0 0 512 512" fill="none" xmlns="http://www.w3.org/2000/svg">
+  <defs>
+    <linearGradient id="gradient1" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#8B5CF6"/>
+      <stop offset="100%" stop-color="#3B82F6"/>
+    </linearGradient>
+    <linearGradient id="gradient2" x1="100%" y1="0%" x2="0%" y2="100%">
+      <stop offset="0%" stop-color="#A855F7"/>
+      <stop offset="100%" stop-color="#2563EB"/>
+    </linearGradient>
+  </defs>
+
+  <!-- The "C" shape -->
+  <path d="M 390 180 C 370 120, 310 80, 240 80 C 140 80, 80 160, 80 256 C 80 352, 140 432, 240 432 C 310 432, 370 392, 390 332" 
+        stroke="url(#gradient1)" stroke-width="80" stroke-linecap="round" fill="none"/>
+
+  <!-- Inner overlay to give 3D overlap effect -->
+  <path d="M 240 80 C 140 80, 80 160, 80 256" 
+        stroke="url(#gradient2)" stroke-width="80" stroke-linecap="round" fill="none" opacity="0.9"/>
+
+  <!-- The Star -->
+  <path d="M 240 180 Q 240 240, 300 240 Q 240 240, 240 300 Q 240 240, 180 240 Q 240 240, 240 180 Z" 
+        fill="url(#gradient1)"/>
+
+  <!-- The Dot -->
+  <circle cx="410" cy="256" r="40" fill="url(#gradient2)"/>
+</svg>
