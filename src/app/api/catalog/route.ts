@@ -1,12 +1,13 @@
 import { NextResponse } from 'next/server';
-import { getData } from '@/lib/data-store';
+import { supabase } from '@/lib/supabase';
 
 export async function GET() {
-  const models = await getData('models.json');
+  const { data: models, error } = await supabase.from('models').select('*');
+  if (error) return NextResponse.json({ error: error.message }, { status: 500 });
   
   return NextResponse.json({
     version: 1,
     updatedAt: new Date().toISOString(),
-    models
+    models: models || []
   });
 }

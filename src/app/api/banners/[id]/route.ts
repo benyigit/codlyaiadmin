@@ -1,24 +1,25 @@
 import { NextResponse } from 'next/server';
-import { getData, saveData } from '@/lib/data-store';
+import { supabase } from '@/lib/supabase';
 
-export async function PUT(req: Request, { params }: { params: Promise<{ id: string }> }) {
-  const p = await params;
-  const updatedFields = await req.json();
-  const data = await getData('banners.json');
-  const index = data.findIndex((item: any) => item.id === p.id);
-  
-  if (index === -1) return NextResponse.json({ error: 'Not found' }, { status: 404 });
-  
-  data[index] = { ...data[index], ...updatedFields, updatedAt: new Date().toISOString() };
-  await saveData('banners.json', data);
-  
-  return NextResponse.json(data[index]);
+export async function PUT(request: Request, { params }: { params: { id: string } }) {
+  try {
+    const body = await request.json();
+    const { id } = await params;
+    const { data, error } = await supabase.from('banners').update(body).eq('id', id).select().single();
+    if (error) return NextResponse.json({ error: error.message }, { status: 500 });
+    return NextResponse.json(data);
+  } catch (err) {
+    return NextResponse.json({ error: 'Failed to update' }, { status: 500 });
+  }
 }
 
-export async function DELETE(req: Request, { params }: { params: Promise<{ id: string }> }) {
-  const p = await params;
-  const data = await getData('banners.json');
-  const filtered = data.filter((item: any) => item.id !== p.id);
-  await saveData('banners.json', filtered);
-  return NextResponse.json({ success: true });
+export async function DELETE(request: Request, { params }: { params: { id: string } }) {
+  try {
+    const { id } = await params;
+    const { error } = await supabase.from('banners').delete().eq('id', id);
+    if (error) return NextResponse.json({ error: error.message }, { status: 500 });
+    return NextResponse.json({ success: true });
+  } catch (err) {
+    return NextResponse.json({ error: 'Failed to delete' }, { status: 500 });
+  }
 }

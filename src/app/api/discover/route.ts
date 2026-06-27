@@ -1,16 +1,18 @@
 import { NextResponse } from 'next/server';
-import { getData } from '@/lib/data-store';
+import { supabase } from '@/lib/supabase';
 
 export async function GET() {
-  const tips = await getData('tips.json');
-  const news = await getData('news.json');
-  const banners = await getData('banners.json');
-  const categories = await getData('categories.json');
+  const [news, tips, banners, categories] = await Promise.all([
+    supabase.from('news').select('*').order('createdAt', { ascending: false }),
+    supabase.from('tips').select('*').order('createdAt', { ascending: false }),
+    supabase.from('banners').select('*').order('createdAt', { ascending: false }),
+    supabase.from('categories').select('*').order('displayOrder', { ascending: true })
+  ]);
   
   return NextResponse.json({
-    tips,
-    news,
-    banners,
-    categories
+    news: news.data || [],
+    tips: tips.data || [],
+    banners: banners.data || [],
+    categories: categories.data || []
   });
 }
