@@ -4,7 +4,6 @@ import { useState } from "react";
 import { useRouter } from "next/navigation";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
-import { Label } from "@/components/ui/label";
 import Image from "next/image";
 
 export default function LoginPage() {
@@ -34,32 +33,34 @@ export default function LoginPage() {
   };
 
   return (
-    <div className="relative flex min-h-screen flex-col items-center justify-center overflow-hidden bg-[#0a0a0a]">
-      {/* Background ambient glow */}
-      <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[800px] h-[800px] bg-purple-900/20 blur-[120px] rounded-full pointer-events-none" />
-      
-      <div className="relative z-10 w-full max-w-[400px] px-6">
-        <div className="mb-10 flex flex-col items-center justify-center text-center">
-          <Image src="/logo.svg" alt="Codly Logo" width={80} height={80} className="mb-6 drop-shadow-2xl" />
-          <h1 className="text-3xl font-medium tracking-tight text-white mb-2">Welcome back</h1>
-          <p className="text-zinc-400 text-sm">Enter your credentials to access the vault.</p>
+    <div className="flex min-h-screen items-center justify-center bg-zinc-50 font-sans">
+      <div className="w-full max-w-[360px] px-6">
+        <div className="flex flex-col items-center mb-10">
+          <div className="w-16 h-16 bg-white rounded-2xl shadow-sm border border-zinc-100 flex items-center justify-center mb-6">
+            <Image src="/logo.svg" alt="Codly Logo" width={40} height={40} className="object-contain" />
+          </div>
+          <h1 className="text-2xl font-semibold tracking-tight text-zinc-900 mb-1">Sign in to Codly</h1>
+          <p className="text-sm text-zinc-500">Welcome back! Please enter your details.</p>
         </div>
 
-        <div className="bg-[#111111] border border-white/10 rounded-2xl p-8 shadow-2xl backdrop-blur-xl">
-          <form onSubmit={handleLogin} className="space-y-5">
-            <div className="space-y-2">
-              <Label htmlFor="username" className="text-xs font-medium text-zinc-400 uppercase tracking-wider">Username</Label>
+        <div className="bg-white rounded-2xl shadow-sm border border-zinc-200 p-6 sm:p-8">
+          <form onSubmit={handleLogin} className="space-y-4">
+            <div className="space-y-1.5">
+              <label htmlFor="username" className="text-sm font-medium text-zinc-700">Username</label>
               <Input 
                 id="username" 
                 value={username} 
                 onChange={(e) => setUsername(e.target.value)} 
                 placeholder="codlyadmin" 
                 required 
-                className="h-12 bg-white/5 border-white/10 text-white placeholder:text-zinc-600 focus-visible:ring-purple-500/50 focus-visible:border-purple-500 rounded-xl"
+                className="h-11 rounded-xl border-zinc-200 focus-visible:ring-1 focus-visible:ring-zinc-900 focus-visible:border-zinc-900 shadow-sm bg-zinc-50"
               />
             </div>
-            <div className="space-y-2">
-              <Label htmlFor="password" className="text-xs font-medium text-zinc-400 uppercase tracking-wider">Password</Label>
+            
+            <div className="space-y-1.5">
+              <div className="flex items-center justify-between">
+                <label htmlFor="password" className="text-sm font-medium text-zinc-700">Password</label>
+              </div>
               <Input 
                 id="password" 
                 type="password" 
@@ -67,34 +68,30 @@ export default function LoginPage() {
                 onChange={(e) => setPassword(e.target.value)} 
                 placeholder="••••••••" 
                 required 
-                className="h-12 bg-white/5 border-white/10 text-white placeholder:text-zinc-600 focus-visible:ring-purple-500/50 focus-visible:border-purple-500 rounded-xl"
+                className="h-11 rounded-xl border-zinc-200 focus-visible:ring-1 focus-visible:ring-zinc-900 focus-visible:border-zinc-900 shadow-sm bg-zinc-50"
               />
             </div>
             
             {error && (
-              <div className="bg-red-500/10 border border-red-500/20 text-red-400 text-sm px-4 py-3 rounded-xl flex items-center">
-                <svg className="w-4 h-4 mr-2" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 8v4m0 4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z" /></svg>
+              <div className="text-red-500 text-sm font-medium pt-1">
                 {error}
               </div>
             )}
             
-            <Button 
-              className="w-full h-12 mt-2 bg-gradient-to-r from-purple-600 to-blue-600 hover:from-purple-500 hover:to-blue-500 text-white font-medium rounded-xl border-0 shadow-lg shadow-purple-900/20 transition-all active:scale-[0.98]" 
-              type="submit" 
-              disabled={loading}
-            >
-              {loading ? (
-                <div className="flex items-center">
-                  <svg className="animate-spin -ml-1 mr-2 h-4 w-4 text-white" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24"><circle className="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" strokeWidth="4"></circle><path className="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path></svg>
-                  Authenticating...
-                </div>
-              ) : "Sign In"}
-            </Button>
+            <div className="pt-2">
+              <Button 
+                className="w-full h-11 bg-zinc-900 hover:bg-zinc-800 text-white rounded-xl shadow-sm font-medium transition-colors" 
+                type="submit" 
+                disabled={loading}
+              >
+                {loading ? "Signing in..." : "Sign in"}
+              </Button>
+            </div>
           </form>
         </div>
         
-        <p className="text-center text-zinc-600 text-xs mt-8">
-          Codly AI Vault • Secure Local Environment
+        <p className="text-center text-zinc-400 text-xs mt-8">
+          &copy; {new Date().getFullYear()} Codly AI. All rights reserved.
         </p>
       </div>
     </div>
