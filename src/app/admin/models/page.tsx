@@ -14,7 +14,7 @@ export default function ModelsPage() {
   const [isOpen, setIsOpen] = useState(false);
 
   useEffect(() => {
-    fetch("/api/models").then(r => r.json()).then(setItems);
+    fetch("/api/models").then(r => r.json()).then(data => setItems(data.models || data || []));
   }, []);
 
   const handleSave = async (e: React.FormEvent) => {
@@ -44,13 +44,13 @@ export default function ModelsPage() {
     
     setIsOpen(false);
     setEditingItem(null);
-    fetch("/api/models").then(r => r.json()).then(setItems);
+    fetch("/api/models").then(r => r.json()).then(data => setItems(data.models || data || []));
   };
 
   const handleDelete = async (id: string) => {
     if (!confirm("Are you sure you want to delete this model?")) return;
     await fetch(`/api/models/${id}`, { method: "DELETE" });
-    fetch("/api/models").then(r => r.json()).then(setItems);
+    fetch("/api/models").then(r => r.json()).then(data => setItems(data.models || data || []));
   };
 
   return (
