@@ -4,7 +4,13 @@ import { supabase } from '@/lib/supabase';
 export async function GET() {
   const { data, error } = await supabase.from('models').select('*').order('createdAt', { ascending: false });
   if (error) return NextResponse.json({ error: error.message }, { status: 500 });
-  return NextResponse.json(data || []);
+  
+  // Wrap in the structure expected by iOS ModelCatalogService
+  return NextResponse.json({
+    version: 1,
+    updatedAt: new Date().toISOString(),
+    models: data || []
+  });
 }
 
 export async function POST(request: Request) {
