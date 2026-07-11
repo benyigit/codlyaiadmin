@@ -53,27 +53,65 @@ export default function NewsPage() {
         <h1 className="text-3xl font-bold">News</h1>
         <Button onClick={() => { setEditingItem(null); setIsOpen(true); }}>Add New</Button><Dialog open={isOpen} onOpenChange={setIsOpen}>
           
-          <DialogContent>
+          <DialogContent className="max-w-2xl max-h-[90vh] overflow-y-auto">
             <DialogHeader>
               <DialogTitle>{editingItem ? "Edit" : "Add"} News</DialogTitle>
             </DialogHeader>
             <form onSubmit={handleSave} className="space-y-4">
               
-              <div className="space-y-2">
-                <Label htmlFor="title">title</Label>
-                <Input id="title" name="title" defaultValue={editingItem?.title || ""} />
-              </div>
-              <div className="space-y-2">
-                <Label htmlFor="summary">summary</Label>
-                <Input id="summary" name="summary" defaultValue={editingItem?.summary || ""} />
-              </div>
-              <div className="space-y-2">
-                <Label htmlFor="tag">tag</Label>
-                <Input id="tag" name="tag" defaultValue={editingItem?.tag || ""} />
-              </div>
-              <div className="space-y-2">
-                <Label htmlFor="dateLabel">dateLabel</Label>
-                <Input id="dateLabel" name="dateLabel" defaultValue={editingItem?.dateLabel || ""} />
+              <div className="grid grid-cols-2 gap-4">
+                <div className="space-y-2 col-span-2">
+                  <Label htmlFor="title">Title (EN)</Label>
+                  <Input id="title" name="title" defaultValue={editingItem?.title || ""} required />
+                </div>
+                <div className="space-y-2">
+                  <Label htmlFor="titleTR">Title (TR)</Label>
+                  <Input id="titleTR" name="titleTR" defaultValue={editingItem?.titleTR || ""} />
+                </div>
+                <div className="space-y-2">
+                  <Label htmlFor="titleDE">Title (DE)</Label>
+                  <Input id="titleDE" name="titleDE" defaultValue={editingItem?.titleDE || ""} />
+                </div>
+
+                <div className="space-y-2 col-span-2">
+                  <Label htmlFor="summary">Summary (EN)</Label>
+                  <Input id="summary" name="summary" defaultValue={editingItem?.summary || ""} required />
+                </div>
+                <div className="space-y-2">
+                  <Label htmlFor="summaryTR">Summary (TR)</Label>
+                  <Input id="summaryTR" name="summaryTR" defaultValue={editingItem?.summaryTR || ""} />
+                </div>
+                <div className="space-y-2">
+                  <Label htmlFor="summaryDE">Summary (DE)</Label>
+                  <Input id="summaryDE" name="summaryDE" defaultValue={editingItem?.summaryDE || ""} />
+                </div>
+
+                <div className="space-y-2">
+                  <Label htmlFor="tag">Tag (EN)</Label>
+                  <Input id="tag" name="tag" defaultValue={editingItem?.tag || ""} required />
+                </div>
+                <div className="space-y-2">
+                  <Label htmlFor="dateLabel">Date Label (EN)</Label>
+                  <Input id="dateLabel" name="dateLabel" defaultValue={editingItem?.dateLabel || ""} required />
+                </div>
+
+                <div className="space-y-2">
+                  <Label htmlFor="tagTR">Tag (TR)</Label>
+                  <Input id="tagTR" name="tagTR" defaultValue={editingItem?.tagTR || ""} />
+                </div>
+                <div className="space-y-2">
+                  <Label htmlFor="dateLabelTR">Date Label (TR)</Label>
+                  <Input id="dateLabelTR" name="dateLabelTR" defaultValue={editingItem?.dateLabelTR || ""} />
+                </div>
+
+                <div className="space-y-2">
+                  <Label htmlFor="tagDE">Tag (DE)</Label>
+                  <Input id="tagDE" name="tagDE" defaultValue={editingItem?.tagDE || ""} />
+                </div>
+                <div className="space-y-2">
+                  <Label htmlFor="dateLabelDE">Date Label (DE)</Label>
+                  <Input id="dateLabelDE" name="dateLabelDE" defaultValue={editingItem?.dateLabelDE || ""} />
+                </div>
               </div>
               <Button type="submit" className="w-full">Save</Button>
             </form>

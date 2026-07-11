@@ -1,13 +1,14 @@
 import { NextResponse } from 'next/server';
 import { supabase } from '@/lib/supabase';
+import { toLowerKeys, toCamelKeys } from '@/lib/db-utils';
 
 export async function PUT(request: Request, { params }: { params: { id: string } }) {
   try {
     const body = await request.json();
     const { id } = await params;
-    const { data, error } = await supabase.from('tips').update(body).eq('id', id).select().single();
+    const { data, error } = await supabase.from('tips').update(toLowerKeys(body)).eq('id', id).select().single();
     if (error) return NextResponse.json({ error: error.message }, { status: 500 });
-    return NextResponse.json(data);
+    return NextResponse.json(toCamelKeys(data));
   } catch (err) {
     return NextResponse.json({ error: 'Failed to update' }, { status: 500 });
   }

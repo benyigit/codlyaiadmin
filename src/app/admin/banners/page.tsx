@@ -53,27 +53,47 @@ export default function BannersPage() {
         <h1 className="text-3xl font-bold">Banners</h1>
         <Button onClick={() => { setEditingItem(null); setIsOpen(true); }}>Add New</Button><Dialog open={isOpen} onOpenChange={setIsOpen}>
           
-          <DialogContent>
+          <DialogContent className="max-w-2xl max-h-[90vh] overflow-y-auto">
             <DialogHeader>
               <DialogTitle>{editingItem ? "Edit" : "Add"} Banners</DialogTitle>
             </DialogHeader>
             <form onSubmit={handleSave} className="space-y-4">
               
-              <div className="space-y-2">
-                <Label htmlFor="title">title</Label>
-                <Input id="title" name="title" defaultValue={editingItem?.title || ""} />
-              </div>
-              <div className="space-y-2">
-                <Label htmlFor="subtitle">subtitle</Label>
-                <Input id="subtitle" name="subtitle" defaultValue={editingItem?.subtitle || ""} />
-              </div>
-              <div className="space-y-2">
-                <Label htmlFor="symbol">symbol</Label>
-                <Input id="symbol" name="symbol" defaultValue={editingItem?.symbol || ""} />
-              </div>
-              <div className="space-y-2">
-                <Label htmlFor="linkedModelID">linkedModelID</Label>
-                <Input id="linkedModelID" name="linkedModelID" defaultValue={editingItem?.linkedModelID || ""} />
+              <div className="grid grid-cols-2 gap-4">
+                <div className="space-y-2 col-span-2">
+                  <Label htmlFor="title">Title (EN)</Label>
+                  <Input id="title" name="title" defaultValue={editingItem?.title || ""} required />
+                </div>
+                <div className="space-y-2">
+                  <Label htmlFor="titleTR">Title (TR)</Label>
+                  <Input id="titleTR" name="titleTR" defaultValue={editingItem?.titleTR || ""} />
+                </div>
+                <div className="space-y-2">
+                  <Label htmlFor="titleDE">Title (DE)</Label>
+                  <Input id="titleDE" name="titleDE" defaultValue={editingItem?.titleDE || ""} />
+                </div>
+
+                <div className="space-y-2 col-span-2">
+                  <Label htmlFor="subtitle">Subtitle (EN)</Label>
+                  <Input id="subtitle" name="subtitle" defaultValue={editingItem?.subtitle || ""} required />
+                </div>
+                <div className="space-y-2">
+                  <Label htmlFor="subtitleTR">Subtitle (TR)</Label>
+                  <Input id="subtitleTR" name="subtitleTR" defaultValue={editingItem?.subtitleTR || ""} />
+                </div>
+                <div className="space-y-2">
+                  <Label htmlFor="subtitleDE">Subtitle (DE)</Label>
+                  <Input id="subtitleDE" name="subtitleDE" defaultValue={editingItem?.subtitleDE || ""} />
+                </div>
+
+                <div className="space-y-2">
+                  <Label htmlFor="symbol">Symbol (SF Symbol Name)</Label>
+                  <Input id="symbol" name="symbol" defaultValue={editingItem?.symbol || ""} required />
+                </div>
+                <div className="space-y-2">
+                  <Label htmlFor="linkedModelID">Linked Model ID</Label>
+                  <Input id="linkedModelID" name="linkedModelID" defaultValue={editingItem?.linkedModelID || ""} />
+                </div>
               </div>
               <Button type="submit" className="w-full">Save</Button>
             </form>

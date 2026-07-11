@@ -53,23 +53,43 @@ export default function TipsPage() {
         <h1 className="text-3xl font-bold">Tips</h1>
         <Button onClick={() => { setEditingItem(null); setIsOpen(true); }}>Add New</Button><Dialog open={isOpen} onOpenChange={setIsOpen}>
           
-          <DialogContent>
+          <DialogContent className="max-w-2xl max-h-[90vh] overflow-y-auto">
             <DialogHeader>
               <DialogTitle>{editingItem ? "Edit" : "Add"} Tips</DialogTitle>
             </DialogHeader>
             <form onSubmit={handleSave} className="space-y-4">
               
-              <div className="space-y-2">
-                <Label htmlFor="title">title</Label>
-                <Input id="title" name="title" defaultValue={editingItem?.title || ""} />
-              </div>
-              <div className="space-y-2">
-                <Label htmlFor="body">body</Label>
-                <Input id="body" name="body" defaultValue={editingItem?.body || ""} />
-              </div>
-              <div className="space-y-2">
-                <Label htmlFor="symbol">symbol</Label>
-                <Input id="symbol" name="symbol" defaultValue={editingItem?.symbol || ""} />
+              <div className="grid grid-cols-2 gap-4">
+                <div className="space-y-2 col-span-2">
+                  <Label htmlFor="title">Title (EN)</Label>
+                  <Input id="title" name="title" defaultValue={editingItem?.title || ""} required />
+                </div>
+                <div className="space-y-2">
+                  <Label htmlFor="titleTR">Title (TR)</Label>
+                  <Input id="titleTR" name="titleTR" defaultValue={editingItem?.titleTR || ""} />
+                </div>
+                <div className="space-y-2">
+                  <Label htmlFor="titleDE">Title (DE)</Label>
+                  <Input id="titleDE" name="titleDE" defaultValue={editingItem?.titleDE || ""} />
+                </div>
+
+                <div className="space-y-2 col-span-2">
+                  <Label htmlFor="body">Body (EN)</Label>
+                  <Input id="body" name="body" defaultValue={editingItem?.body || ""} required />
+                </div>
+                <div className="space-y-2">
+                  <Label htmlFor="bodyTR">Body (TR)</Label>
+                  <Input id="bodyTR" name="bodyTR" defaultValue={editingItem?.bodyTR || ""} />
+                </div>
+                <div className="space-y-2">
+                  <Label htmlFor="bodyDE">Body (DE)</Label>
+                  <Input id="bodyDE" name="bodyDE" defaultValue={editingItem?.bodyDE || ""} />
+                </div>
+
+                <div className="space-y-2 col-span-2">
+                  <Label htmlFor="symbol">Symbol (SF Symbol Name)</Label>
+                  <Input id="symbol" name="symbol" defaultValue={editingItem?.symbol || ""} required />
+                </div>
               </div>
               <Button type="submit" className="w-full">Save</Button>
             </form>

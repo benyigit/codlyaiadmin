@@ -34,7 +34,21 @@ const keyMap: Record<string, string> = {
   categorytr: 'categoryTR',
   categoryde: 'categoryDE',
   tagstr: 'tagsTR',
-  tagsde: 'tagsDE'
+  tagsde: 'tagsDE',
+  linkedmodelid: 'linkedModelID',
+  datelabel: 'dateLabel',
+  datelabeltr: 'dateLabelTR',
+  datelabelde: 'dateLabelDE',
+  titletr: 'titleTR',
+  titlede: 'titleDE',
+  subtitletr: 'subtitleTR',
+  subtitlede: 'subtitleDE',
+  bodytr: 'bodyTR',
+  bodyde: 'bodyDE',
+  summarytr: 'summaryTR',
+  summaryde: 'summaryDE',
+  tagtr: 'tagTR',
+  tagde: 'tagDE'
 };
 
 export function toCamelKeys(obj: any): any {

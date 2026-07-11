@@ -1,18 +1,19 @@
 import { NextResponse } from 'next/server';
 import { supabase } from '@/lib/supabase';
+import { toLowerKeys, toCamelKeys } from '@/lib/db-utils';
 
 export async function GET() {
   const { data, error } = await supabase.from('banners').select('*').order('createdat', { ascending: false });
   if (error) return NextResponse.json({ error: error.message }, { status: 500 });
-  return NextResponse.json(data || []);
+  return NextResponse.json(data ? toCamelKeys(data) : []);
 }
 
 export async function POST(request: Request) {
   try {
     const body = await request.json();
-    const { data, error } = await supabase.from('banners').insert(body).select().single();
+    const { data, error } = await supabase.from('banners').insert(toLowerKeys(body)).select().single();
     if (error) return NextResponse.json({ error: error.message }, { status: 500 });
-    return NextResponse.json(data);
+    return NextResponse.json(toCamelKeys(data));
   } catch (err) {
     return NextResponse.json({ error: 'Failed to create' }, { status: 500 });
   }
