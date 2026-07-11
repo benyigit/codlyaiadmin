@@ -26,7 +26,15 @@ const keyMap: Record<string, string> = {
   imageurl: 'imageURL',
   backgroundcolor: 'backgroundColor',
   textcolor: 'textColor',
-  displayorder: 'displayOrder'
+  displayorder: 'displayOrder',
+  nametr: 'nameTR',
+  namede: 'nameDE',
+  descriptiontr: 'descriptionTR',
+  descriptionde: 'descriptionDE',
+  categorytr: 'categoryTR',
+  categoryde: 'categoryDE',
+  tagstr: 'tagsTR',
+  tagsde: 'tagsDE'
 };
 
 export function toCamelKeys(obj: any): any {
