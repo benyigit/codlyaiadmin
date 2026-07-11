@@ -33,6 +33,8 @@ export default function ModelsPage() {
     data.isPopular = formData.get("isPopular") === "on";
     data.tags = (data.tags as string).split(',').map(t => t.trim()).filter(Boolean);
     data.recommendedDevices = (data.recommendedDevices as string).split(',').map(t => t.trim()).filter(Boolean);
+    data.tagsTR = (data.tagsTR as string || "").split(',').map(t => t.trim()).filter(Boolean);
+    data.tagsDE = (data.tagsDE as string || "").split(',').map(t => t.trim()).filter(Boolean);
 
     if (editingItem?.id) {
       await fetch(`/api/models/${editingItem.id}`, {
@@ -91,6 +93,17 @@ export default function ModelsPage() {
                 <div className="space-y-2"><Label>Recommended Devices (comma separated)</Label><Input name="recommendedDevices" defaultValue={editingItem?.recommendedDevices?.join(", ") || ""} /></div>
                 <div className="space-y-2"><Label>Minimum RAM (GB)</Label><Input name="minimumRAM" type="number" defaultValue={editingItem?.minimumRAM || ""} required /></div>
                 <div className="space-y-2"><Label>License</Label><Input name="license" defaultValue={editingItem?.license || ""} /></div>
+                
+                {/* Localization Columns */}
+                <div className="space-y-2"><Label>Name (TR)</Label><Input name="nameTR" defaultValue={editingItem?.nameTR || ""} /></div>
+                <div className="space-y-2"><Label>Name (DE)</Label><Input name="nameDE" defaultValue={editingItem?.nameDE || ""} /></div>
+                <div className="space-y-2"><Label>Category (TR)</Label><Input name="categoryTR" defaultValue={editingItem?.categoryTR || ""} /></div>
+                <div className="space-y-2"><Label>Category (DE)</Label><Input name="categoryDE" defaultValue={editingItem?.categoryDE || ""} /></div>
+                <div className="space-y-2 col-span-2"><Label>Description (TR)</Label><Textarea name="descriptionTR" defaultValue={editingItem?.descriptionTR || ""} /></div>
+                <div className="space-y-2 col-span-2"><Label>Description (DE)</Label><Textarea name="descriptionDE" defaultValue={editingItem?.descriptionDE || ""} /></div>
+                <div className="space-y-2"><Label>Tags (TR - comma separated)</Label><Input name="tagsTR" defaultValue={editingItem?.tagsTR?.join(", ") || ""} /></div>
+                <div className="space-y-2"><Label>Tags (DE - comma separated)</Label><Input name="tagsDE" defaultValue={editingItem?.tagsDE?.join(", ") || ""} /></div>
+
                 <div className="flex items-center space-x-2 mt-6">
                   <input type="checkbox" id="isFeatured" name="isFeatured" defaultChecked={editingItem?.isFeatured} />
                   <Label htmlFor="isFeatured">Featured</Label>

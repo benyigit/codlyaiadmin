@@ -13,7 +13,10 @@ export default function BannersPage() {
   const [isOpen, setIsOpen] = useState(false);
 
   useEffect(() => {
-    fetch("/api/banners").then(r => r.json()).then(setItems);
+    fetch("/api/banners").then(r => r.json()).then(data => {
+      if (Array.isArray(data)) setItems(data);
+      else { console.error(data); setItems([]); }
+    }).catch(() => setItems([]));
   }, []);
 
   const handleSave = async (e: React.FormEvent) => {
@@ -35,13 +38,13 @@ export default function BannersPage() {
     
     setIsOpen(false);
     setEditingItem(null);
-    fetch("/api/banners").then(r => r.json()).then(setItems);
+    fetch("/api/banners").then(r => r.json()).then(data => setItems(Array.isArray(data) ? data : []));
   };
 
   const handleDelete = async (id: string) => {
     if (!confirm("Are you sure?")) return;
     await fetch(`/api/banners/${id}`, { method: "DELETE" });
-    fetch("/api/banners").then(r => r.json()).then(setItems);
+    fetch("/api/banners").then(r => r.json()).then(data => setItems(Array.isArray(data) ? data : []));
   };
 
   return (

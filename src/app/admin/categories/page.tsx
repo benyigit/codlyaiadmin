@@ -13,7 +13,10 @@ export default function CategoriesPage() {
   const [isOpen, setIsOpen] = useState(false);
 
   useEffect(() => {
-    fetch("/api/categories").then(r => r.json()).then(setItems);
+    fetch("/api/categories").then(r => r.json()).then(data => {
+      if (Array.isArray(data)) setItems(data);
+      else { console.error(data); setItems([]); }
+    }).catch(() => setItems([]));
   }, []);
 
   const handleSave = async (e: React.FormEvent) => {
@@ -35,13 +38,13 @@ export default function CategoriesPage() {
     
     setIsOpen(false);
     setEditingItem(null);
-    fetch("/api/categories").then(r => r.json()).then(setItems);
+    fetch("/api/categories").then(r => r.json()).then(data => setItems(Array.isArray(data) ? data : []));
   };
 
   const handleDelete = async (id: string) => {
     if (!confirm("Are you sure?")) return;
     await fetch(`/api/categories/${id}`, { method: "DELETE" });
-    fetch("/api/categories").then(r => r.json()).then(setItems);
+    fetch("/api/categories").then(r => r.json()).then(data => setItems(Array.isArray(data) ? data : []));
   };
 
   return (
