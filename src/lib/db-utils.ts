@@ -17,6 +17,7 @@ const keyMap: Record<string, string> = {
   ispopular: 'isPopular',
   downloadurl: 'downloadURL',
   iconurl: 'iconURL',
+  bannerurl: 'bannerURL',
   createdat: 'createdAt',
   updatedat: 'updatedAt',
   recommendeddevices: 'recommendedDevices',
