@@ -17,10 +17,17 @@ export default function ModelsPage() {
   const [currentTagsTR, setCurrentTagsTR] = useState("");
   const [currentTagsDE, setCurrentTagsDE] = useState("");
 
+  const [currentIconURL, setCurrentIconURL] = useState("");
+  const [currentBannerURL, setCurrentBannerURL] = useState("");
+  const [uploadingIcon, setUploadingIcon] = useState(false);
+  const [uploadingBanner, setUploadingBanner] = useState(false);
+
   useEffect(() => {
     setCurrentTags(editingItem?.tags?.join(", ") || "");
     setCurrentTagsTR(editingItem?.tagsTR?.join(", ") || "");
     setCurrentTagsDE(editingItem?.tagsDE?.join(", ") || "");
+    setCurrentIconURL(editingItem?.iconURL || "");
+    setCurrentBannerURL(editingItem?.bannerURL || "");
   }, [editingItem]);
 
   useEffect(() => {
@@ -90,6 +97,34 @@ export default function ModelsPage() {
     });
   };
 
+  const handleUpload = async (e: React.ChangeEvent<HTMLInputElement>, type: 'icon' | 'banner') => {
+    const file = e.target.files?.[0];
+    if (!file) return;
+
+    if (type === 'icon') setUploadingIcon(true);
+    else setUploadingBanner(true);
+
+    try {
+      const response = await fetch(`/api/upload?filename=${encodeURIComponent(file.name)}`, {
+        method: 'POST',
+        body: file,
+      });
+      const data = await response.json();
+      if (data.url) {
+        if (type === 'icon') setCurrentIconURL(data.url);
+        else setCurrentBannerURL(data.url);
+      } else {
+        alert(data.error || 'Upload failed');
+      }
+    } catch (err) {
+      console.error(err);
+      alert('Upload failed');
+    } finally {
+      if (type === 'icon') setUploadingIcon(false);
+      else setUploadingBanner(false);
+    }
+  };
+
   return (
     <div>
       <div className="flex justify-between items-center mb-6">
@@ -130,8 +165,32 @@ export default function ModelsPage() {
                 <div className="space-y-2"><Label>Recommended Devices (comma separated)</Label><Input name="recommendedDevices" defaultValue={editingItem?.recommendedDevices?.join(", ") || ""} /></div>
                 <div className="space-y-2"><Label>Minimum RAM (GB)</Label><Input name="minimumRAM" type="number" defaultValue={editingItem?.minimumRAM || ""} required /></div>
                 <div className="space-y-2"><Label>License</Label><Input name="license" defaultValue={editingItem?.license || ""} /></div>
-                <div className="space-y-2"><Label>Cover Image URL (iconURL)</Label><Input name="iconURL" defaultValue={editingItem?.iconURL || ""} /></div>
-                <div className="space-y-2"><Label>Banner Image URL (bannerURL)</Label><Input name="bannerURL" defaultValue={editingItem?.bannerURL || ""} /></div>
+                
+                <div className="space-y-2">
+                  <Label>Cover Image URL (iconURL)</Label>
+                  <div className="flex space-x-2">
+                    <Input name="iconURL" value={currentIconURL} onChange={e => setCurrentIconURL(e.target.value)} />
+                    <div className="relative">
+                      <Button type="button" variant="secondary" disabled={uploadingIcon}>
+                        {uploadingIcon ? "..." : "Upload"}
+                      </Button>
+                      <input type="file" className="absolute inset-0 w-full h-full opacity-0 cursor-pointer" accept="image/*" onChange={e => handleUpload(e, 'icon')} disabled={uploadingIcon} />
+                    </div>
+                  </div>
+                </div>
+                
+                <div className="space-y-2">
+                  <Label>Banner Image URL (bannerURL)</Label>
+                  <div className="flex space-x-2">
+                    <Input name="bannerURL" value={currentBannerURL} onChange={e => setCurrentBannerURL(e.target.value)} />
+                    <div className="relative">
+                      <Button type="button" variant="secondary" disabled={uploadingBanner}>
+                        {uploadingBanner ? "..." : "Upload"}
+                      </Button>
+                      <input type="file" className="absolute inset-0 w-full h-full opacity-0 cursor-pointer" accept="image/*" onChange={e => handleUpload(e, 'banner')} disabled={uploadingBanner} />
+                    </div>
+                  </div>
+                </div>
                 
                 {/* Localization Columns */}
                 <div className="space-y-2"><Label>Name (TR)</Label><Input name="nameTR" defaultValue={editingItem?.nameTR || ""} /></div>
