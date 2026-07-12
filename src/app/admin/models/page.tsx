@@ -230,11 +230,11 @@ export default function ModelsPage() {
 
                 <div className="flex items-center space-x-2 mt-6">
                   <input type="checkbox" id="isFeatured" name="isFeatured" defaultChecked={editingItem?.isFeatured} />
-                  <Label htmlFor="isFeatured">Featured</Label>
+                  <Label htmlFor="isFeatured">Keşfete Ekle (Featured - Discover)</Label>
                 </div>
                 <div className="flex items-center space-x-2 mt-6">
                   <input type="checkbox" id="isPopular" name="isPopular" defaultChecked={editingItem?.isPopular} />
-                  <Label htmlFor="isPopular">Popular</Label>
+                  <Label htmlFor="isPopular">Popülerlere Ekle (Popular)</Label>
                 </div>
               </div>
               <Button type="submit" className="w-full">Save Model</Button>
