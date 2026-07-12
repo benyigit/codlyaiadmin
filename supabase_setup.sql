@@ -19,6 +19,7 @@ CREATE TABLE public.models (
     license TEXT,
     downloadURL TEXT,
     iconURL TEXT,
+    bannerURL TEXT,
     screenshots JSONB DEFAULT '[]',
     createdAt TIMESTAMP WITH TIME ZONE DEFAULT timezone('utc'::text, now()),
     updatedAt TIMESTAMP WITH TIME ZONE DEFAULT timezone('utc'::text, now())

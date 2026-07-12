@@ -93,6 +93,8 @@ export default function ModelsPage() {
                 <div className="space-y-2"><Label>Recommended Devices (comma separated)</Label><Input name="recommendedDevices" defaultValue={editingItem?.recommendedDevices?.join(", ") || ""} /></div>
                 <div className="space-y-2"><Label>Minimum RAM (GB)</Label><Input name="minimumRAM" type="number" defaultValue={editingItem?.minimumRAM || ""} required /></div>
                 <div className="space-y-2"><Label>License</Label><Input name="license" defaultValue={editingItem?.license || ""} /></div>
+                <div className="space-y-2"><Label>Cover Image URL (iconURL)</Label><Input name="iconURL" defaultValue={editingItem?.iconURL || ""} /></div>
+                <div className="space-y-2"><Label>Banner Image URL (bannerURL)</Label><Input name="bannerURL" defaultValue={editingItem?.bannerURL || ""} /></div>
                 
                 {/* Localization Columns */}
                 <div className="space-y-2"><Label>Name (TR)</Label><Input name="nameTR" defaultValue={editingItem?.nameTR || ""} /></div>
