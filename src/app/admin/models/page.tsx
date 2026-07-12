@@ -13,6 +13,16 @@ export default function ModelsPage() {
   const [editingItem, setEditingItem] = useState<any | null>(null);
   const [isOpen, setIsOpen] = useState(false);
 
+  const [currentTags, setCurrentTags] = useState("");
+  const [currentTagsTR, setCurrentTagsTR] = useState("");
+  const [currentTagsDE, setCurrentTagsDE] = useState("");
+
+  useEffect(() => {
+    setCurrentTags(editingItem?.tags?.join(", ") || "");
+    setCurrentTagsTR(editingItem?.tagsTR?.join(", ") || "");
+    setCurrentTagsDE(editingItem?.tagsDE?.join(", ") || "");
+  }, [editingItem]);
+
   useEffect(() => {
     fetch("/api/models").then(r => r.json()).then(data => {
       if (Array.isArray(data)) setItems(data);
@@ -67,6 +77,19 @@ export default function ModelsPage() {
     });
   };
 
+  const allTags = Array.from(new Set(items.flatMap(item => item.tags || []))).filter(Boolean);
+  const allTagsTR = Array.from(new Set(items.flatMap(item => item.tagsTR || []))).filter(Boolean);
+  const allTagsDE = Array.from(new Set(items.flatMap(item => item.tagsDE || []))).filter(Boolean);
+
+  const appendTag = (setter: React.Dispatch<React.SetStateAction<string>>, tag: string) => {
+    setter(prev => {
+      if (!prev) return tag;
+      const arr = prev.split(',').map(t => t.trim());
+      if (arr.includes(tag)) return prev;
+      return prev + ", " + tag;
+    });
+  };
+
   return (
     <div>
       <div className="flex justify-between items-center mb-6">
@@ -84,7 +107,21 @@ export default function ModelsPage() {
                 <div className="space-y-2"><Label>Provider</Label><Input name="provider" defaultValue={editingItem?.provider || ""} required /></div>
                 <div className="space-y-2"><Label>Category</Label><Input name="category" defaultValue={editingItem?.category || ""} required /></div>
                 <div className="space-y-2 col-span-2"><Label>Description</Label><Textarea name="description" defaultValue={editingItem?.description || ""} /></div>
-                <div className="space-y-2"><Label>Tags (comma separated)</Label><Input name="tags" defaultValue={editingItem?.tags?.join(", ") || ""} /></div>
+                
+                <div className="space-y-2 col-span-2">
+                  <Label>Tags (comma separated)</Label>
+                  <Input name="tags" value={currentTags} onChange={e => setCurrentTags(e.target.value)} />
+                  {allTags.length > 0 && (
+                    <div className="flex flex-wrap gap-1 mt-1">
+                      {allTags.map(tag => (
+                        <span key={tag as string} className="text-xs bg-slate-200 dark:bg-slate-800 px-2 py-1 rounded cursor-pointer hover:bg-blue-500 hover:text-white transition-colors" 
+                              onClick={() => appendTag(setCurrentTags, tag as string)}>
+                          {tag as string}
+                        </span>
+                      ))}
+                    </div>
+                  )}
+                </div>
                 <div className="space-y-2"><Label>HuggingFace Repo</Label><Input name="huggingFaceRepo" defaultValue={editingItem?.huggingFaceRepo || ""} required /></div>
                 <div className="space-y-2"><Label>File Name</Label><Input name="fileName" defaultValue={editingItem?.fileName || ""} required /></div>
                 <div className="space-y-2"><Label>Download URL</Label><Input name="downloadURL" defaultValue={editingItem?.downloadURL || ""} required /></div>
@@ -103,8 +140,34 @@ export default function ModelsPage() {
                 <div className="space-y-2"><Label>Category (DE)</Label><Input name="categoryDE" defaultValue={editingItem?.categoryDE || ""} /></div>
                 <div className="space-y-2 col-span-2"><Label>Description (TR)</Label><Textarea name="descriptionTR" defaultValue={editingItem?.descriptionTR || ""} /></div>
                 <div className="space-y-2 col-span-2"><Label>Description (DE)</Label><Textarea name="descriptionDE" defaultValue={editingItem?.descriptionDE || ""} /></div>
-                <div className="space-y-2"><Label>Tags (TR - comma separated)</Label><Input name="tagsTR" defaultValue={editingItem?.tagsTR?.join(", ") || ""} /></div>
-                <div className="space-y-2"><Label>Tags (DE - comma separated)</Label><Input name="tagsDE" defaultValue={editingItem?.tagsDE?.join(", ") || ""} /></div>
+                <div className="space-y-2 col-span-2">
+                  <Label>Tags (TR - comma separated)</Label>
+                  <Input name="tagsTR" value={currentTagsTR} onChange={e => setCurrentTagsTR(e.target.value)} />
+                  {allTagsTR.length > 0 && (
+                    <div className="flex flex-wrap gap-1 mt-1">
+                      {allTagsTR.map(tag => (
+                        <span key={tag as string} className="text-xs bg-slate-200 dark:bg-slate-800 px-2 py-1 rounded cursor-pointer hover:bg-blue-500 hover:text-white transition-colors" 
+                              onClick={() => appendTag(setCurrentTagsTR, tag as string)}>
+                          {tag as string}
+                        </span>
+                      ))}
+                    </div>
+                  )}
+                </div>
+                <div className="space-y-2 col-span-2">
+                  <Label>Tags (DE - comma separated)</Label>
+                  <Input name="tagsDE" value={currentTagsDE} onChange={e => setCurrentTagsDE(e.target.value)} />
+                  {allTagsDE.length > 0 && (
+                    <div className="flex flex-wrap gap-1 mt-1">
+                      {allTagsDE.map(tag => (
+                        <span key={tag as string} className="text-xs bg-slate-200 dark:bg-slate-800 px-2 py-1 rounded cursor-pointer hover:bg-blue-500 hover:text-white transition-colors" 
+                              onClick={() => appendTag(setCurrentTagsDE, tag as string)}>
+                          {tag as string}
+                        </span>
+                      ))}
+                    </div>
+                  )}
+                </div>
 
                 <div className="flex items-center space-x-2 mt-6">
                   <input type="checkbox" id="isFeatured" name="isFeatured" defaultChecked={editingItem?.isFeatured} />
