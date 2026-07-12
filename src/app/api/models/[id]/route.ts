@@ -1,12 +1,13 @@
 export const dynamic = 'force-dynamic';
 import { NextResponse } from 'next/server';
 import { supabase } from '@/lib/supabase';
+import { toLowerKeys } from '@/lib/db-utils';
 
 export async function PUT(request: Request, { params }: { params: { id: string } }) {
   try {
     const body = await request.json();
     const { id } = await params;
-    const { data, error } = await supabase.from('models').update(body).eq('id', id).select().single();
+    const { data, error } = await supabase.from('models').update(toLowerKeys(body)).eq('id', id).select().single();
     if (error) return NextResponse.json({ error: error.message }, { status: 500 });
     return NextResponse.json(data);
   } catch (err) {
